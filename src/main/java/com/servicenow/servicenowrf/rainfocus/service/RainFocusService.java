@@ -7,8 +7,6 @@ import java.util.List;
 public interface RainFocusService {
     RainFocusDto getRainFocusDataForUser(String email, String eventCode);
 
-    List<SessionDto> getAllSessionsForAnEvent(String eventId);
-
     String updateAttendee(AttendeeDto attendeeDto);
 
     List<SessionDto> getAllAcceptedSessions(String eventId);

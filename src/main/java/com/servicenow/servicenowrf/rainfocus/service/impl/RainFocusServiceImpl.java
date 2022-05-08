@@ -40,26 +40,6 @@ public class RainFocusServiceImpl implements RainFocusService {
     }
 
     @Override
-    @CachePut(value = "allSessionsOfAnEvent", key = "#eventId")
-    public List<SessionDto> getAllSessionsForAnEvent(String eventId) {
-        log.info("Fetching sessions for eventId -> {}", eventId);
-
-        String sessionUri = properties.getRainfocusBaseUrl() + "/feed/bwSessionData?rfApiProfileId=" + properties.getRainfocusApiProfileId() + "&event=" + eventId;
-        try {
-            ResponseEntity<SessionResponseWrapper> exchange = restTemplate.exchange(sessionUri, HttpMethod.GET, null, SessionResponseWrapper.class);
-            if (exchange.getStatusCode().equals(HttpStatus.OK) && exchange.getBody() != null && !exchange.getBody().getItems().isEmpty()) {
-                log.info("Total sessions of event {} -> {}", eventId, exchange.getBody().getItems().size());
-                List<SessionDto> items = exchange.getBody().getItems();
-                items.forEach(sessionDto -> sessionDto.setEventId(eventId));
-                return items;
-            }
-        } catch (HttpClientErrorException e) {
-            log.error("Exception while fetching sessions {}", e.getMessage());
-        }
-        return Collections.emptyList();
-    }
-
-    @Override
     public String updateAttendee(AttendeeDto attendeeDto) {
         if (attendeeDto != null) {
             log.info("Updating attendee");

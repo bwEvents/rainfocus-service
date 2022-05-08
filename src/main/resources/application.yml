@@ -1,38 +1,6 @@
-grant-type: authorization_code
-#redirect-uri: 'https://knowledge.webstg.servicenow.com/library'
-redirect-uri: 'https://knowledge.servicenow.com/library'
----
-okta:
-  #  base-url: 'https://servicenowext.oktapreview.com/oauth2/default'
-  base-url: 'https://servicenowsignon.okta.com/oauth2/default'
-  token-uri: '/v1/token'
-  user-uri: '/v1/userinfo'
-  client:
-    id: ${oktaClientId}
-    secret: ${oktaClientSecret}
----
-session:
-  #  redirect-uri: 'https://knowledge.webstg.servicenow.com/library'
-  redirect-uri: 'https://knowledge.servicenow.com/{path}'
----
 rainfocus:
-  api-profile-key: ${rfApiKey}
-  #  base-url: 'https://events.stg.rainfocus.com/api/servicenow/v2'
+  api-profile-key: 1hGBArn60dAcDabjKLw7jC7s7uRbwNKY
   base-url: 'https://events.rainfocus.com/api/servicenow/v2'
----
-cdp:
-  clientId: ${cdpClientId}
-  clientSecret: ${cdpClientSecret}
-  apiKey: ${cdpApiKey}
-  #  base-url: 'https://webapi.webstg.servicenow.com/api/external/cdp/v1/user/{email}'
-  base-url: 'https://webapi.servicenow.com/api/external/cdp/v1/user/{email}'
----
-is.whitelisted.in.okta: true
----
-spring:
-  data:
-    mongodb:
-      uri: mongodb+srv://servicenow-admin:QZ04CG1DfoWDUvuF@knowledge22.wxt1r.mongodb.net/knowledge22
 ---
 spring:
   redis:
