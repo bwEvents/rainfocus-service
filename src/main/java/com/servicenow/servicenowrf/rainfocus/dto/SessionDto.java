@@ -80,6 +80,39 @@ public class SessionDto implements Serializable {
 
     @JsonProperty("sessiontime_id")
     private String sessiontimeId;
+    
+    @JsonProperty("de: digital session format")
+    private String deDigitalSessionFormat;
+
+    @JsonProperty("resource title 1")
+    private String resourceTitle1;
+
+    @JsonProperty("de: resources 1:url")
+    private String deResources1Url;
+
+    @JsonProperty("resource title 2")
+    private String resourceTitle2;
+
+    @JsonProperty("de: resources 2:url")
+    private String deResources2Url;
+
+    @JsonProperty("resource title 3")
+    private String resourceTitle3;
+
+    @JsonProperty("de: resources 3:url")
+    private String deResources3Url;
+
+    @JsonProperty("resource title 4")
+    private String resourceTitle4;
+
+    @JsonProperty("de: resources 4:url")
+    private String deResources4Url;
+
+    @JsonProperty("resource title 5")
+    private String resourceTitle5;
+
+    @JsonProperty("de: resources 5:url")
+    private String deResources5Url;
 
     // For internal purpose
     private String eventId;
