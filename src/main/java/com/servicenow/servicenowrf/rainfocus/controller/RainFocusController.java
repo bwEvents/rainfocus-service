@@ -32,7 +32,7 @@ public class RainFocusController {
     }
 
     @GetMapping("/sessions/sessionsAllAccepted/{eventId}")
-    public ResponseEntity<List<SessionDto>> getAllAcceptedSessions(@PathVariable String eventId) {
+    public ResponseEntity<Object> getAllAcceptedSessions(@PathVariable String eventId) {
         if (StringUtils.hasLength(eventId)) {
             return new ResponseEntity<>(rainFocusService.getAllAcceptedSessions(eventId), HttpStatus.OK);
         }

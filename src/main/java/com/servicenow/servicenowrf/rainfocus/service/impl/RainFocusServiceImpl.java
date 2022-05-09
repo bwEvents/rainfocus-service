@@ -9,7 +9,6 @@ import com.servicenow.servicenowrf.rainfocus.service.RFAuthTokenGenerator;
 import com.servicenow.servicenowrf.rainfocus.service.RainFocusService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -75,7 +74,7 @@ public class RainFocusServiceImpl implements RainFocusService {
 
     @Override
     @Cacheable(value = "acceptedSessionsForEvent", key = "#eventId")
-    public List<SessionDto> getAllAcceptedSessions(String eventId) {
+    public Object getAllAcceptedSessions(String eventId) {
         log.info("Fetching all sessions for eventId -> {}", eventId);
         var apiProfileAndUri = RFConstants.apiProfileAndUri(eventId);
 
@@ -83,12 +82,9 @@ public class RainFocusServiceImpl implements RainFocusService {
             String[] parts = apiProfileAndUri.split("~");
             String sessionUri = parts[1] + "/feed/bwSessionData?rfApiProfileId=" + parts[0] + "&event=" + eventId;
             try {
-                var response = restTemplate.getForEntity(sessionUri, SessionResponseWrapper.class);
-                if (response.getStatusCode().equals(HttpStatus.OK) && response.getBody() != null && !response.getBody().getItems().isEmpty()) {
-                    log.info("Total sessions of event {} -> {}", eventId, response.getBody().getItems().size());
-                    List<SessionDto> items = response.getBody().getItems();
-                    items.forEach(sessionDto -> sessionDto.setEventId(eventId));
-                    return items;
+                var response = restTemplate.getForEntity(sessionUri, JsonNode.class);
+                if (response.getStatusCode().equals(HttpStatus.OK) && response.getBody() != null) {
+                    return response.getBody().get("items");
                 }
             } catch (HttpClientErrorException e) {
                 log.error("Exception fetching sessions {}", e.getMessage());

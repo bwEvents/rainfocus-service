@@ -9,7 +9,7 @@ public interface RainFocusService {
 
     String updateAttendee(AttendeeDto attendeeDto);
 
-    List<SessionDto> getAllAcceptedSessions(String eventId);
+    Object getAllAcceptedSessions(String eventId);
 
     String addSession(String eventId, String validId, String sessionTimeId);
 
