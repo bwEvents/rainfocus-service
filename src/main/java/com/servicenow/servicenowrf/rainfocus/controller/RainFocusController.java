@@ -129,9 +129,9 @@ public class RainFocusController {
     }
 
     @GetMapping("/allSponsors")
-    public ResponseEntity<List<Exhibitor>> sponsorsDump(@RequestParam("eventId") String eventId) {
+    public ResponseEntity<List<Exhibitor>> sponsorsDump(@RequestParam("eventId") String eventId, @RequestParam(value ="fileType", required = false) String fileType) {
         if (StringUtils.hasLength(eventId)) {
-            return new ResponseEntity<>(rainFocusService.fetchAllSponsors(eventId), HttpStatus.OK);
+            return new ResponseEntity<>(rainFocusService.fetchAllSponsors(eventId, fileType), HttpStatus.OK);
         }
         return ResponseEntity.badRequest().build();
     }

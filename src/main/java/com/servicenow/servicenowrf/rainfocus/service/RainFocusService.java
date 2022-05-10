@@ -34,8 +34,8 @@ public interface RainFocusService {
     String updateAttendeeInfo(String attendeeId, String eventId, String attributeCode, String score);
 
     List<SpeakerWrapper.Section> fetchSpeakers(String eventId);
-
-    List<Exhibitor> fetchAllSponsors(String eventId);
+    
+    List<Exhibitor> fetchAllSponsors(String eventId, String fileType);
 
     Object playList(String eventId, String widgetId);
 

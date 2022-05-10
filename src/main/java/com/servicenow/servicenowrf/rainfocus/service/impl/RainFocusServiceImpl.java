@@ -372,7 +372,7 @@ public class RainFocusServiceImpl implements RainFocusService {
 
     @Override
     @Cacheable(value = "allSponsorsForEvent", key = "#eventId")
-    public List<Exhibitor> fetchAllSponsors(String eventId) {
+    public List<Exhibitor> fetchAllSponsors(String eventId, String fileType) {
         log.info("Fetching all sponsors for eventId -> {}", eventId);
         var apiProfileAndUri = RFConstants.apiProfileAndUri(eventId);
 
@@ -382,7 +382,26 @@ public class RainFocusServiceImpl implements RainFocusService {
             try {
                 var response = restTemplate.getForEntity(uri, ExhibitorWrapper.class);
                 if (response.getStatusCode().equals(HttpStatus.OK) && response.getBody() != null && response.getBody().getResponseMessage().equals("Success")) {
-                    return response.getBody().getData();
+                    if (fileType == null || fileType.isEmpty())
+                    	return response.getBody().getData();
+                    else
+                    {
+                        List<Exhibitor> exhibitorList = response.getBody().getData();
+                        for (int i = 0; exhibitorList != null && i < exhibitorList.size(); i++)
+                        {
+                            Exhibitor exhibitor = exhibitorList.get(i);
+                            List<ExhibitorResource> files = exhibitor.getFiles();
+                            List<ExhibitorResource> validFiles = new ArrayList<>();
+                            for (int j = 0; files != null && j < files.size(); j++)
+                            {
+                                ExhibitorResource exhibitorResource =  files.get(j);
+                                if (fileType.equalsIgnoreCase(exhibitorResource.getFileType()))
+                                    validFiles.add(exhibitorResource);
+                            }
+                            exhibitor.setFiles(validFiles);
+                        }
+                        return exhibitorList;
+                    }
                 }
             } catch (HttpClientErrorException e) {
                 log.error("Exception fetching all sponsors {}", e.getMessage());
