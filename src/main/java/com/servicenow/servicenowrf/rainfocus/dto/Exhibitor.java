@@ -21,15 +21,4 @@ public class Exhibitor implements Serializable {
     private String demo;
     private List<ExhibitorResource> files;
     private List<AttributeValue> attributeValues;
-
-    public List<ExhibitorResource> getFiles() {
-        List<ExhibitorResource> onlyLogosExhibitorResources = new ArrayList<>();
-        if (files != null) {
-            for (ExhibitorResource exhibitorResource : files) {
-                if (exhibitorResource != null && exhibitorResource.getFileType() != null && "logo".equalsIgnoreCase(exhibitorResource.getFileType()))
-                    onlyLogosExhibitorResources.add(exhibitorResource);
-            }
-        }
-        return onlyLogosExhibitorResources;
-    }
 }
