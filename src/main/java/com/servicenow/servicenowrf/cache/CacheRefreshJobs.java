@@ -21,7 +21,7 @@ public class CacheRefreshJobs {
     public void refreshSessionsForAllEvents() {
         properties.getEvents().forEach(event -> {
             rainFocusService.getAllAcceptedSessions(event);
-            rainFocusService.fetchAllSponsors(event);
+            rainFocusService.fetchAllSponsors(event, null);
             rainFocusService.fetchSpeakers(event);
         });
     }
